@@ -28,18 +28,18 @@ public class UserController {
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         Customer customer = convertDTOToEntity(customerDTO);
-        return convertEntityToDTO(userService.saveCustomer(customer));
+        return convertCustomerEntityToDTO(userService.saveCustomer(customer));
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
         List<Customer> customers = userService.getAllCustomers();
-        return customers.stream().map(customer -> convertEntityToDTO(customer)).collect(Collectors.toList());
+        return customers.stream().map(customer -> convertCustomerEntityToDTO(customer)).collect(Collectors.toList());
     }
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+        return convertCustomerEntityToDTO(userService.getOwnerByPetID(petId));
     }
 
     @PostMapping("/employee")
@@ -71,9 +71,13 @@ public class UserController {
         return customerEntity;
     }
 
-    private CustomerDTO convertEntityToDTO(Customer customerEntity){
+    private CustomerDTO convertCustomerEntityToDTO(Customer customerEntity){
         CustomerDTO customerDto = new CustomerDTO();
         BeanUtils.copyProperties(customerEntity,customerDto);
+        customerDto.setPetIds(customerEntity.getPets().
+                    stream().
+                    map(pet -> pet.getId()).
+                    collect(Collectors.toList()));
         return customerDto;
     }
 

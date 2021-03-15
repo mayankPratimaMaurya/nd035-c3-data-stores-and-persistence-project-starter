@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.pet;
 
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
+import com.udacity.jdnd.course3.critter.user.entity.Customer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,10 @@ public class PetController {
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        Pet pet = petService.savePet(convertPetDTOToEntity(petDTO));
-        return convertPetEntityToDTO(pet);
+        Pet savedPet = petService.savePet(convertPetDTOToEntity(petDTO));
+        return convertPetEntityToDTO(savedPet);
     }
+
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
@@ -42,12 +44,20 @@ public class PetController {
     private PetDTO convertPetEntityToDTO(Pet petEntity){
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(petEntity,petDTO);
+        petDTO.setOwnerId(petEntity.getCustomer().getId());
         return petDTO;
     }
 
     private Pet convertPetDTOToEntity(PetDTO petDTO){
         Pet petEntity = new Pet();
         BeanUtils.copyProperties(petDTO,petEntity);
+        updatePetEntityWithCustomerId(petDTO,petEntity);
         return petEntity;
+    }
+
+    private void updatePetEntityWithCustomerId(PetDTO petDTO, Pet pet) {
+        Customer customer = pet.getCustomer();
+        customer.setId(petDTO.getOwnerId());
+        pet.setCustomer(customer);
     }
 }

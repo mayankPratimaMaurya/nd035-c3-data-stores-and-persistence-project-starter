@@ -15,6 +15,7 @@ public class PetService {
     private PetRepository petRepository;
 
     public Pet savePet(Pet pet){
+
         return petRepository.save(pet);
     }
 
@@ -27,6 +28,6 @@ public class PetService {
     }
 
     public List<Pet> getPetsByOwnerId(Long ownerID){
-        return petRepository.getPetsByOwnerId(ownerID);
+        return petRepository.getPetsByCustomer_Id(ownerID);
     }
 }

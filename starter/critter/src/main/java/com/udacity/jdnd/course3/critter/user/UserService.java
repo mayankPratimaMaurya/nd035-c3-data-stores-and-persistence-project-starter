@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.pet.repository.PetRepository;
 import com.udacity.jdnd.course3.critter.user.entity.Customer;
 import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import com.udacity.jdnd.course3.critter.user.repository.CustomerRepository;
@@ -23,23 +24,30 @@ public class UserService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    Customer saveCustomer(Customer customer){
+    @Autowired
+    PetRepository petRepository;
+
+    public Customer saveCustomer(Customer customer){
         return customerRepository.save(customer);
     }
 
-    List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
     }
 
-    Employee saveEmployee(Employee employee)  {
+    public Customer getOwnerByPetID(Long petID){
+        return null;
+    }
+
+    public Employee saveEmployee(Employee employee)  {
         return employeeRepository.save(employee);
     }
 
-    Employee getEmployeeById(Long employeeId){
+    public Employee getEmployeeById(Long employeeId){
         return employeeRepository.findById(employeeId).get();
     }
 
-    List<Employee> getEmployeesForService(Set<EmployeeSkill> skills , LocalDate date){
+    public List<Employee> getEmployeesForService(Set<EmployeeSkill> skills , LocalDate date){
         List<Employee> employees =  employeeRepository.getEmployeeByDaysAvailable(date.getDayOfWeek());
 
         return employees.stream()

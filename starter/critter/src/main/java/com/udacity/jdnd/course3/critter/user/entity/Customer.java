@@ -18,9 +18,13 @@ public class Customer {
 
     private String phoneNumber;
     private String notes;
+
     @OneToMany(fetch= FetchType.LAZY , mappedBy = "customer")
     private List<Pet> pets;
 
+    public Customer() {
+        pets = new ArrayList<>();
+    }
     public Long getId() {
         return id;
     }
