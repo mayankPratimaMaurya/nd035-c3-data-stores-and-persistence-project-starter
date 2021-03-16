@@ -10,7 +10,7 @@ import java.util.*;
 public class Customer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Nationalized
@@ -23,7 +23,7 @@ public class Customer {
     private List<Pet> pets;
 
     public Customer() {
-        pets = new ArrayList<>();
+        pets = new ArrayList<Pet>();
     }
     public Long getId() {
         return id;

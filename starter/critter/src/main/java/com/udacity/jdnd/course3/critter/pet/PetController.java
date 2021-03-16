@@ -51,13 +51,13 @@ public class PetController {
     private Pet convertPetDTOToEntity(PetDTO petDTO){
         Pet petEntity = new Pet();
         BeanUtils.copyProperties(petDTO,petEntity);
-        updatePetEntityWithCustomerId(petDTO,petEntity);
-        return petEntity;
+        return updatePetEntityWithCustomerId(petDTO,petEntity);
     }
 
-    private void updatePetEntityWithCustomerId(PetDTO petDTO, Pet pet) {
+    private Pet updatePetEntityWithCustomerId(PetDTO petDTO, Pet pet) {
         Customer customer = pet.getCustomer();
         customer.setId(petDTO.getOwnerId());
         pet.setCustomer(customer);
+        return pet;
     }
 }

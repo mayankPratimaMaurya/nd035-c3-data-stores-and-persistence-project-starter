@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.pet.entity.Pet;
 import com.udacity.jdnd.course3.critter.pet.repository.PetRepository;
 import com.udacity.jdnd.course3.critter.user.entity.Customer;
 import com.udacity.jdnd.course3.critter.user.entity.Employee;
@@ -35,10 +36,6 @@ public class UserService {
         return customerRepository.findAll();
     }
 
-    public Customer getOwnerByPetID(Long petID){
-        return null;
-    }
-
     public Employee saveEmployee(Employee employee)  {
         return employeeRepository.save(employee);
     }
@@ -59,5 +56,13 @@ public class UserService {
         Employee employee = employeeRepository.findById(employeeID).get();
         employee.setDaysAvailable(daysAvailable);
         employeeRepository.save(employee);
+    }
+
+    public void addPetToCustomer(Pet pet){
+        Customer customer = pet.getCustomer();
+        List<Pet> pets = customer.getPets();
+        pets.add(pet);
+        customer.setPets(pets);
+        customerRepository.save(customer);
     }
 }
