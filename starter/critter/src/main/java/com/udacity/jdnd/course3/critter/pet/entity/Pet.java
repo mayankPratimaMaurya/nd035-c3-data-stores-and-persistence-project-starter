@@ -14,8 +14,10 @@ public class Pet {
     private Long id;
 
     private PetType type;
+    @Column(length = 50)
     private String name;
     private LocalDate birthDate;
+    @Column(length = 500)
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -14,12 +14,14 @@ public class Customer {
     private Long id;
 
     @Nationalized
+    @Column(length=50)
     private String name;
 
     private String phoneNumber;
+    @Column(length = 500)
     private String notes;
 
-    @OneToMany(fetch= FetchType.LAZY , mappedBy = "customer")
+    @OneToMany(fetch= FetchType.LAZY , mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     public Customer() {
