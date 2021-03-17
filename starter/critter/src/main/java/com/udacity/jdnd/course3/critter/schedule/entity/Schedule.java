@@ -6,6 +6,7 @@ import com.udacity.jdnd.course3.critter.user.entity.Employee;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class Schedule {
 
     @ElementCollection
     private Set<EmployeeSkill> activities;
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Schedule() {
         employees = new ArrayList<Employee>();
@@ -64,11 +65,11 @@ public class Schedule {
         this.activities = activities;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
